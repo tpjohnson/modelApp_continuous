@@ -21,9 +21,9 @@ shinyUI(fluidPage(
              mainPanel(
 
 # for testing purposes, delete later: -------------------------------------
-               fluidRow(
-                 dataTableOutput("csv1Table") 
-               ),
+               # fluidRow(
+               #   dataTableOutput("csv1Table") 
+               # ),
                
 
 # var select, dependent on data uploaded ----------------------------------

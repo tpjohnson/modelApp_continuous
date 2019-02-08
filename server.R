@@ -13,14 +13,14 @@ shinyServer(function(input, output){
   })
   
   # this is for testing purposes, delete this later:
-  output$csv1Table <- renderDataTable({
-    dat <- data.reactive()
-    dat
-  })
+  # output$csv1Table <- renderDataTable({
+  #   dat <- data.reactive()
+  #   dat
+  # })
 
 # UI Var Select, dependent on 1st data upload ---------------------------------
   output$yVarInput <- renderUI({
-    radioButtons(inputId = "yVarInput", label = NULL,
+    radioButtons(inputId = "radioyVarInput", label = NULL,
                  choices = if(is.null(input$csv1)){
                    "Please Select Data for Upload"
                  }else{
@@ -30,7 +30,7 @@ shinyServer(function(input, output){
   })
   
   output$xVarsInput <- renderUI({
-    checkboxGroupInput(inputId = "xVarsInput", label = NULL,
+    checkboxGroupInput(inputId = "radioxVarsInput", label = NULL,
                        choices = if(is.null(input$csv1)){
                          "Please Select Data for Upload"
                        }else{
@@ -41,13 +41,14 @@ shinyServer(function(input, output){
   
 
 # Model output, reactive on go button -------------------------------------
-  model.reactive <- eventReactive(input$modelButton, {
-    dat <- data.reactive()
+  model.reactive <- eventReactive(input$daButton, {
+    
+    dat <- data.clean.fun(data = data.reactive(), method = input$cleanInput)
     
     if(is.null(dat)){
       print("Import Data")
     }else{
-      model.fun(yvar = input$yVarInput, xvars = input$xVarsInput, data = dat, model = input$modelInput)[1:2]
+      model.fun(yvar = input$radioyVarInput, xvars = input$radioxVarsInput, data = dat, model = input$modelInput)[1:2]
     }
   })
   

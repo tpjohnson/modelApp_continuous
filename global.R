@@ -5,7 +5,6 @@
 # refresh button that refreshes the page, maybe need a JS element?
 
 
-
 # packages needed ---------------------------------------------------------
 packages <- c("shiny", "shinythemes", "dplyr", "data.table", "DT")
 sapply(packages, require, character.only = T)
@@ -29,19 +28,19 @@ model.fun <- function(yvar, xvars, data, model, seed = 12345){
   
   set.seed(seed)
   
-  if(model == "Linear Model"){
+  if(model == "Linear"){
     lm.fit <- lm(as.formula(paste(yvar, "~", paste(xvars, collapse = "+"))), data = data)
-    out <- list(data.frame(summary(lm.fit)$coef), paste("RMSE:", sqrt(mean(lm.fit$residuals^2))), data.frame(lm.fit$fitted.values))
+    output <- list(data.frame(summary(lm.fit)$coef), paste("RMSE:", sqrt(mean(lm.fit$residuals^2))), data.frame(lm.fit$fitted.values))
     
   }else if(model == "Random Forest"){
     rf.fit <- randomForest(as.formula(paste(yvar, "~", paste(xvars, collapse = "+"))), data = data)
-    out <- list(data.frame(rf.fit$importance), paste("RMSE:", sqrt(rf.fit$mse[500])), data.frame(rf.fit$predicted))
+    output <- list(data.frame(rf.fit$importance), paste("RMSE:", sqrt(rf.fit$mse[500])), data.frame(rf.fit$predicted))
     
   }else{
     print("Model not yet built.. Check back later")
   }
   
-  out
+  return(output)
   
 }
 
@@ -70,3 +69,4 @@ model.fun <- function(yvar, xvars, data, model, seed = 12345){
 # temp <- mice(cars.)
 # temp2 <- data.frame(complete(temp, 1))
 
+#model.fun(yvar = "mpg", xvars = c("cyl", "disp", "hp"), data = mtcars, model = "Linear")[1:2]
