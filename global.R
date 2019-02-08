@@ -3,6 +3,7 @@
 
 # Things I want to add ----------------------------------------------------
 # refresh button that refreshes the page, maybe need a JS element?
+# data inputation method that isn't MICE
 
 
 # packages needed ---------------------------------------------------------

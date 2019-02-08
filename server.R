@@ -57,11 +57,12 @@ shinyServer(function(input, output){
   })
   
 
-# Download button, not yet working ----------------------------------------
+# download button ---------------------------------------------------------
   output$downloadButton <- downloadHandler(
     filename = function() {paste0('pred_vals-', Sys.Date(), '.csv')},
     content = function(file) {
-      preds <- model.fun(yvar = input$yVarInput, xvars = input$xVarsInput, data = fread(input$csv1$datapath), model = input$modelInput)[[3]]
+      dat <- data.clean.fun(data = data.reactive(), method = input$cleanInput)
+      preds <- model.fun(yvar = input$radioyVarInput, xvars = input$radioxVarsInput, data = dat, model = input$modelInput)[[3]]
       names(preds) <- c("Predicted_Values")
       write.csv(preds, file, row.names = TRUE)
     },
