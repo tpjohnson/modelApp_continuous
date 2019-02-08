@@ -1,18 +1,28 @@
 #global.r
 
-# -----------------------------------------------------------------
-# Packages
+
+# Things I want to add ----------------------------------------------------
+# refresh button that refreshes the page, maybe need a JS element?
+
+
+
+# packages needed ---------------------------------------------------------
 packages <- c("shiny", "shinythemes", "dplyr", "data.table", "DT")
 sapply(packages, require, character.only = T)
 
 
-#-----------------------------------------------------------------
-# app functions
-
+# app functions -----------------------------------------------------------
 read.data <- function(dat){if(is.null(dat)){return(NULL)}else{fread(dat)}}
 
-data.clean.fun <- function(method){
-  #idk yet
+data.clean.fun <- function(data, method = "Remove Missing Data"){
+  if(method == "Remove Missing Data"){
+    out.df <- na.omit(data)
+  }else if(method == "No Thanks"){
+    out.df <- data
+  }else{
+    out.df <- data
+  }
+  return(out.df)
 }
 
 model.fun <- function(yvar, xvars, data, model, seed = 12345){
@@ -39,14 +49,24 @@ model.fun <- function(yvar, xvars, data, model, seed = 12345){
 
 
 
-#----------------------------------------------------------------
-# SCRATCH WORK. COMMENT THIS OUT B4 RUNNING
-#scratch work
-path <- "C:/Users/Trevor/Desktop/"
-list.files(path)
 
-dat <- fread(paste0(path, "Batting.csv"))
-
-
-
+# SCRATCH WORK. COMMENT THIS OUT B4 RUNNING -------------------------------
+# path <- "C:/Users/Trevor/Desktop/"
+# list.files(path)
+# 
+# dat <- fread(paste0(path, "Batting.csv"))
+# na.omit(dat)
+# 
+# library(mice)
+# glimpse(dat)
+# output <- mice(data = dat, method = "pmm")
+# methods(mice)
+# 
+# 
+# 
+# cars. <- mtcars
+# cars.[1, 2] <- NA
+# 
+# temp <- mice(cars.)
+# temp2 <- data.frame(complete(temp, 1))
 
